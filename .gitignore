@@ -79,3 +79,5 @@ Icon\r
 # uv
 # Keep the lockfile tracked for reproducible installs
 # uv.lock
+
+*.mp3
