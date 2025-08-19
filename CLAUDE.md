@@ -25,6 +25,15 @@ uv run python IntroductionToOpenAI/prompt_ex.py
 uv run python IntroductionToOpenAI/prompt_ex_v2.py
 ```
 
+### Pre-commit hooks
+```bash
+# Install pre-commit hooks (if .pre-commit-config.yaml exists)
+pre-commit install
+
+# Run pre-commit on all files manually
+pre-commit run --all-files
+```
+
 ### Alternative: virtualenv + pip
 ```bash
 cd /Users/jmiller/Development/KodeKloud
