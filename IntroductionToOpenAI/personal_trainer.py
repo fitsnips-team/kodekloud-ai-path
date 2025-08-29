@@ -1,3 +1,5 @@
+"""Personal Trainer Example with OpenAI"""
+
 from openai import OpenAI
 import pandas as pd
 import kagglehub
@@ -10,7 +12,7 @@ print("Path to dataset files:", path)
 client = OpenAI()
 
 # bring in fitness data
-df = pd.read_csv(f"{path}/Sleep_health_and_lifestyle_dataset.csv")
+DATA_FILE = pd.read_csv(f"{path}/Sleep_health_and_lifestyle_dataset.csv")
 
 goals = []
 
@@ -21,22 +23,30 @@ while True:
 
     goals.append(goal)
 
-def trainer(goals, df):
-    messages = []
-    for goal in goals:
-        messages.append({"role": "user", "content": goal})
 
-    messages.extend([
-       {"role": "system", "content": "Direct. Point form"},
-       {"role": "assistant", "content": f"You are a health expert. The person you are responding to is a accountant. Be specific to the role. Be technical and specific and reference this data {df} in your response and provide solutions to the {goals}"} 
-    ])
+def trainer(user_goals, data_file):
+    "Have OpenAI analyze data and make suggestions"
+    messages = []
+    for user_goal in user_goals:
+        messages.append({"role": "user", "content": user_goal})
+
+    messages.extend(
+        [
+            {"role": "system", "content": "Direct. Point form"},
+            {
+                "role": "assistant",
+                "content": f"You are a health expert. The person you are responding to is a accountant. "
+                f"Be specific to the role. Be technical and specific and reference this data "
+                f"{data_file} in your response and provide solutions to the {goals}",
+            },
+        ]
+    )
 
     response = client.chat.completions.create(
-        model = "gpt-4o",
-        messages = messages,
-        temperature = 0.9)
+        model="gpt-4o", messages=messages, temperature=0.9
+    )
 
     return response.choices[0].message.content
 
 
-print(trainer(goals,df))
+print(trainer(goals, DATA_FILE))

@@ -24,7 +24,7 @@ def recipe_gen(ingredients):
             {"role": "system", "content": "JSON Format"},
             {
                 "role": "assistant",
-                "content": "You are a high end chef. Generate a recipe bases on the ingredients. Must be exported in JSON format",
+                "content": "You are a high end chef. Generate a recipe bases on the ingredients. Must be exported in JSON formatOr",
             },
         ]
     )

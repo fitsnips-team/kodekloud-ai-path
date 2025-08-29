@@ -1,10 +1,11 @@
+"""Speech to text using OpenAI's GPT model."""
+
 from openai import OpenAI
-import os
 
 client = OpenAI()
 
-AUDIO_FILE = open("./tts_example.mp3", "rb")
+AUDIO_FILE = "./tts_example.mp3"
 
-transcribe = client.audio.transcriptions.create(model="whisper-1", file=AUDIO_FILE)
-
-print(transcribe.text)
+with open(AUDIO_FILE, "rb") as audio_file:
+    transcribe = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
+    print(transcribe.text)

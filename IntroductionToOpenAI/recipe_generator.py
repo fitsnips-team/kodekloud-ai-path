@@ -1,5 +1,6 @@
+"Recipe from input ingredients"
+
 from openai import OpenAI
-import os
 
 client = OpenAI()
 
@@ -12,22 +13,29 @@ while True:
 
     ingredients.append(ingredient)
 
-def recipe_gen(ingredients):
+
+def recipe_gen(user_ingredients):
+    "GPT generate recipe with ingredients mildly considered"
     messages = []
 
-    for ingredient in ingredients:
-        messages.append({"role": "user", "content": ingredient})
+    for user_ingredient in user_ingredients:
+        messages.append({"role": "user", "content": user_ingredient})
 
-    messages.extend([
-        {"role": "system", "content": "direct, point"},
-        {"role": "assistant", "content": "You are a high end chef. Generate a recipe bases on the ingredients"}]
+    messages.extend(
+        [
+            {"role": "system", "content": "direct, point"},
+            {
+                "role": "assistant",
+                "content": "You are a high end chef."
+                + "Generate a recipe based on the ingredients",
+            },
+        ]
     )
 
     response = client.chat.completions.create(
-        model="gpt-4o",
-        messages = messages,
-        max_tokens = 300,
-        temperature = 0.9)
+        model="gpt-4o", messages=messages, max_tokens=300, temperature=0.9
+    )
     return response.choices[0].message.content
+
 
 print(recipe_gen(ingredients))
